@@ -181,6 +181,14 @@ impl PyNetworkId {
     pub fn address_prefix(&self) -> String {
         Prefix::from(self.0.network_type).to_string()
     }
+
+    /// The string representation.
+    ///
+    /// Returns:
+    ///     str: The NetworkId as a string
+    pub fn __str__(&self) -> String {
+        self.0.to_string()
+    }
 }
 
 impl From<PyNetworkId> for NetworkId {

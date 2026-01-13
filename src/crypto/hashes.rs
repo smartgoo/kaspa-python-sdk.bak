@@ -41,6 +41,14 @@ impl PyHash {
     pub fn py_to_string(&self) -> String {
         self.0.to_string()
     }
+
+    /// The string representation.
+    ///
+    /// Returns:
+    ///     str: The Hash as a hex string
+    pub fn __str__(&self) -> String {
+        self.0.to_string()
+    }
 }
 
 impl From<PyHash> for Hash {

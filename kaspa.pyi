@@ -38,7 +38,7 @@ class AccountKind:
         """
     def __str__(self) -> builtins.str:
         r"""
-        Get the string representation.
+        The string representation.
         
         Returns:
             str: The account kind as a string.
@@ -144,6 +144,13 @@ class Address:
         
         Returns:
             str: A shortened address string in the format `prefix:start....end`.
+        """
+    def __str__(self) -> builtins.str:
+        r"""
+        The string representation.
+        
+        Returns:
+            str: The address as a string
         """
 
 @typing.final
@@ -381,6 +388,13 @@ class Hash:
         
         Returns:
             str: A 64-character hex string.
+        """
+    def __str__(self) -> builtins.str:
+        r"""
+        The string representation.
+        
+        Returns:
+            str: The Hash as a hex string
         """
 
 @typing.final
@@ -659,6 +673,13 @@ class NetworkId:
         
         Returns:
             str: The prefix string ("kaspa", "kaspatest", "kaspadev", or "kaspasim").
+        """
+    def __str__(self) -> builtins.str:
+        r"""
+        The string representation.
+        
+        Returns:
+            str: The NetworkId as a string
         """
 
 @typing.final
@@ -1858,6 +1879,13 @@ class ScriptPublicKey:
         
         Returns:
             ScriptPublicKey: A new ScriptPublicKey instance.
+        """
+    def __str__(self) -> builtins.str:
+        r"""
+        The string representation.
+        
+        Returns:
+            str: The address as a hex string
         """
 
 @typing.final

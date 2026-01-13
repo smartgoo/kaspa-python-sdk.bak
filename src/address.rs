@@ -163,6 +163,14 @@ impl PyAddress {
     pub fn short(&self, n: usize) -> String {
         self.0.short(n)
     }
+
+    /// The string representation.
+    ///
+    /// Returns:
+    ///     str: The address as a string
+    pub fn __str__(&self) -> String {
+        self.0.address_to_string()
+    }
 }
 
 impl From<Address> for PyAddress {

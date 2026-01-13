@@ -39,7 +39,14 @@ impl PyScriptPublicKey {
     ///     str: The script data encoded as hexadecimal.
     #[getter]
     pub fn get_script(&self) -> String {
-        // self.0.script.to_hex()
+        self.0.script_as_hex()
+    }
+
+    /// The string representation.
+    ///
+    /// Returns:
+    ///     str: The address as a hex string
+    pub fn __str__(&self) -> String {
         self.0.script_as_hex()
     }
 }

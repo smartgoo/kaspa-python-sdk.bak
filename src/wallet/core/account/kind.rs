@@ -43,7 +43,7 @@ impl PyAccountKind {
         Ok(Self(inner))
     }
 
-    /// Get the string representation.
+    /// The string representation.
     ///
     /// Returns:
     ///     str: The account kind as a string.
