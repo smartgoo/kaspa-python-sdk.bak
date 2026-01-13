@@ -1,5 +1,5 @@
 use kaspa_hashes::Hash;
-use pyo3::{exceptions::PyException, prelude::*};
+use pyo3::{exceptions::PyException, prelude::*, types::PyBytes};
 use pyo3_stub_gen::derive::*;
 use std::str::FromStr;
 
@@ -48,6 +48,11 @@ impl PyHash {
     ///     str: The Hash as a hex string
     pub fn __str__(&self) -> String {
         self.0.to_string()
+    }
+
+    /// The byte representation
+    pub fn __bytes__<'py>(&self, py: Python<'py>) -> Bound<'py, PyBytes> {
+        PyBytes::new(py, &self.0.as_bytes())
     }
 }
 

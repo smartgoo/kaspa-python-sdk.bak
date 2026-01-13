@@ -1,7 +1,7 @@
 use crate::types::PyBinary;
 use kaspa_consensus_core::tx::ScriptPublicKey;
 use kaspa_utils::hex::FromHex;
-use pyo3::{exceptions::PyException, prelude::*};
+use pyo3::{exceptions::PyException, prelude::*, types::PyBytes};
 use pyo3_stub_gen::derive::{gen_stub_pyclass, gen_stub_pymethods};
 use std::str::FromStr;
 
@@ -48,6 +48,11 @@ impl PyScriptPublicKey {
     ///     str: The address as a hex string
     pub fn __str__(&self) -> String {
         self.0.script_as_hex()
+    }
+
+    /// The byte representation
+    pub fn __bytes__<'py>(&self, py: Python<'py>) -> Bound<'py, PyBytes> {
+        PyBytes::new(py, self.0.script())
     }
 }
 

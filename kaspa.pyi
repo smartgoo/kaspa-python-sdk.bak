@@ -1887,6 +1887,10 @@ class ScriptPublicKey:
         Returns:
             str: The address as a hex string
         """
+    def __bytes__(self) -> bytes:
+        r"""
+        The byte representation
+        """
 
 @typing.final
 class Transaction:
