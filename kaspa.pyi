@@ -23,6 +23,7 @@ class AccountKind:
     
     Category: Wallet/Core
     """
+    def __eq__(self, other: builtins.object) -> builtins.bool: ...
     def __new__(cls, kind: builtins.str) -> AccountKind:
         r"""
         Create a new AccountKind from a string.
@@ -104,6 +105,7 @@ class Address:
         Returns:
             str: The payload portion of the address.
         """
+    def __eq__(self, other: builtins.object) -> builtins.bool: ...
     def __new__(cls, address: builtins.str) -> Address:
         r"""
         Create a new Address from a string.
@@ -180,6 +182,7 @@ class DerivationPath:
     
     Category: Wallet/Keys
     """
+    def __eq__(self, other: builtins.object) -> builtins.bool: ...
     def __new__(cls, path: builtins.str) -> DerivationPath:
         r"""
         Create a derivation path from a string.
@@ -369,6 +372,7 @@ class Hash:
     
     Category: Core/Types
     """
+    def __eq__(self, other: builtins.object) -> builtins.bool: ...
     def __new__(cls, hex_str: builtins.str) -> Hash:
         r"""
         Create a new Hash from a hex string.
@@ -395,6 +399,10 @@ class Hash:
         
         Returns:
             str: The Hash as a hex string
+        """
+    def __bytes__(self) -> bytes:
+        r"""
+        The byte representation
         """
 
 @typing.final
@@ -621,6 +629,7 @@ class NetworkId:
         Returns:
             int: The default P2P port number.
         """
+    def __eq__(self, other: builtins.object) -> builtins.bool: ...
     def __new__(cls, network_id: typing.Any) -> NetworkId:
         r"""
         Create a new NetworkId.
@@ -1869,6 +1878,7 @@ class ScriptPublicKey:
         Returns:
             str: The script data encoded as hexadecimal.
         """
+    def __eq__(self, other: builtins.object) -> builtins.bool: ...
     def __new__(cls, version: builtins.int, script: Binary) -> ScriptPublicKey:
         r"""
         Create a new script public key.

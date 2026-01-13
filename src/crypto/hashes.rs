@@ -9,8 +9,8 @@ use std::str::FromStr;
 ///
 /// Category: Core/Types
 #[gen_stub_pyclass]
-#[pyclass(name = "Hash")]
-#[derive(Clone)]
+#[pyclass(name = "Hash", eq)]
+#[derive(Clone, PartialEq)]
 pub struct PyHash(Hash);
 
 #[gen_stub_pymethods]

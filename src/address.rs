@@ -59,8 +59,8 @@ impl<'py> FromPyObject<'_, 'py> for PyAddressVersion {
 ///
 /// Category: Core/Types
 #[gen_stub_pyclass]
-#[pyclass(name = "Address")]
-#[derive(Clone)]
+#[pyclass(name = "Address", eq)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct PyAddress(pub Address);
 
 #[gen_stub_pymethods]

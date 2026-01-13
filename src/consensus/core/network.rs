@@ -74,8 +74,8 @@ impl From<&PyNetworkType> for NetworkType {
 ///
 /// Category: Core/Types
 #[gen_stub_pyclass]
-#[derive(Clone)]
-#[pyclass(name = "NetworkId", skip_from_py_object)]
+#[pyclass(name = "NetworkId", skip_from_py_object, eq)]
+#[derive(Clone, PartialEq)]
 pub struct PyNetworkId(NetworkId);
 
 #[gen_stub_pymethods]

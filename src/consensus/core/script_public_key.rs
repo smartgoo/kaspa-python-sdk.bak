@@ -12,8 +12,8 @@ use std::str::FromStr;
 ///
 /// Category: Core/Types
 #[gen_stub_pyclass]
-#[pyclass(name = "ScriptPublicKey")]
-#[derive(Clone)]
+#[pyclass(name = "ScriptPublicKey", eq)]
+#[derive(Clone, PartialEq)]
 pub struct PyScriptPublicKey(ScriptPublicKey);
 
 #[gen_stub_pymethods]
