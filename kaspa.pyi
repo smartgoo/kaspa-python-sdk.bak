@@ -362,6 +362,7 @@ class GeneratorSummary:
         Returns:
             str | None: The transaction ID, or None if not yet generated.
         """
+    def __eq__(self, other: GeneratorSummary) -> builtins.bool: ...
 
 @typing.final
 class Hash:
@@ -743,7 +744,7 @@ class PaymentOutput:
     
     Category: Wallet/Transactions
     """
-    ...
+    def __eq__(self, other: PaymentOutput) -> builtins.bool: ...
 
 @typing.final
 class PendingTransaction:
@@ -1859,6 +1860,7 @@ class ScriptBuilder:
         Raises:
             Exception: If encoding fails.
         """
+    def __eq__(self, other: ScriptBuilder) -> builtins.bool: ...
 
 @typing.final
 class ScriptPublicKey:
@@ -2096,6 +2098,7 @@ class Transaction:
         Returns:
             list[Address]: List of unique addresses referenced by inputs.
         """
+    def __eq__(self, other: Transaction) -> builtins.bool: ...
 
 @typing.final
 class TransactionInput:
@@ -2192,6 +2195,7 @@ class TransactionInput:
         Returns:
             TransactionInput: A new TransactionInput instance.
         """
+    def __eq__(self, other: TransactionInput) -> builtins.bool: ...
 
 @typing.final
 class TransactionOutpoint:
@@ -2236,6 +2240,7 @@ class TransactionOutpoint:
         Returns:
             str: A string in format "transaction_id-index".
         """
+    def __eq__(self, other: TransactionOutpoint) -> builtins.bool: ...
 
 @typing.final
 class TransactionOutput:
@@ -2290,6 +2295,7 @@ class TransactionOutput:
         Returns:
             TransactionOutput: A new TransactionOutput instance.
         """
+    def __eq__(self, other: TransactionOutput) -> builtins.bool: ...
 
 @typing.final
 class UtxoEntries:
@@ -2344,6 +2350,7 @@ class UtxoEntries:
         Returns:
             int: The sum of all UTXO values in sompi.
         """
+    def __eq__(self, other: UtxoEntries) -> builtins.bool: ...
 
 @typing.final
 class UtxoEntry:
@@ -2403,6 +2410,7 @@ class UtxoEntry:
         Returns:
             bool: True if this is a coinbase UTXO.
         """
+    def __eq__(self, other: UtxoEntry) -> builtins.bool: ...
 
 @typing.final
 class UtxoEntryReference:
@@ -2469,6 +2477,7 @@ class UtxoEntryReference:
         Returns:
             ScriptPublicKey: The script public key.
         """
+    def __eq__(self, other: builtins.object) -> builtins.bool: ...
 
 @typing.final
 class XOnlyPublicKey:
