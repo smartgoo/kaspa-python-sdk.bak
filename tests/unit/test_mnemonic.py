@@ -5,16 +5,17 @@ Unit tests for the Mnemonic class.
 import pytest
 
 from kaspa import Mnemonic, Language
+from tests.conftest import TEST_MNEMONIC_PHRASE
 
 
 class TestMnemonicCreation:
     """Tests for Mnemonic construction."""
 
-    def test_create_mnemonic_from_valid_phrase(self, known_mnemonic_phrase):
+    def test_create_mnemonic_from_valid_phrase(self):
         """Test creating a Mnemonic from a valid 24-word phrase."""
-        mnemonic = Mnemonic(phrase=known_mnemonic_phrase)
+        mnemonic = Mnemonic(phrase=TEST_MNEMONIC_PHRASE)
         assert isinstance(mnemonic, Mnemonic)
-        assert mnemonic.phrase == known_mnemonic_phrase
+        assert mnemonic.phrase == TEST_MNEMONIC_PHRASE
 
     def test_create_mnemonic_from_invalid_phrase_raises(self):
         """Test that creating a Mnemonic from an invalid phrase raises an error."""
@@ -48,26 +49,26 @@ class TestMnemonicCreation:
 class TestMnemonicValidation:
     """Tests for Mnemonic validation."""
 
-    def test_validate_valid_phrase_returns_true(self, known_mnemonic_phrase):
+    def test_validate_valid_phrase_returns_true(self):
         """Test that validate() returns True for a valid phrase."""
-        assert Mnemonic.validate(known_mnemonic_phrase) is True
+        assert Mnemonic.validate(TEST_MNEMONIC_PHRASE) is True
 
     def test_validate_invalid_phrase_returns_false(self):
         """Test that validate() returns False for an invalid phrase."""
         assert Mnemonic.validate("invalid phrase") is False
 
-    def test_validate_with_language_parameter(self, known_mnemonic_phrase):
+    def test_validate_with_language_parameter(self):
         """Test validate() with explicit Language parameter."""
         # English is the default/only supported language
-        assert Mnemonic.validate(known_mnemonic_phrase, Language.English) is True
+        assert Mnemonic.validate(TEST_MNEMONIC_PHRASE, Language.English) is True
 
 
 class TestMnemonicProperties:
     """Tests for Mnemonic properties."""
 
-    def test_phrase_property(self, known_mnemonic, known_mnemonic_phrase):
+    def test_phrase_property(self, known_mnemonic):
         """Test that phrase property returns the mnemonic phrase."""
-        assert known_mnemonic.phrase == known_mnemonic_phrase
+        assert known_mnemonic.phrase == TEST_MNEMONIC_PHRASE
 
     def test_entropy_property(self, known_mnemonic):
         """Test that entropy property returns a hex string."""
@@ -99,10 +100,10 @@ class TestMnemonicSeed:
         seed = known_mnemonic.to_seed("")
         assert isinstance(seed, str)
 
-    def test_same_mnemonic_same_seed(self, known_mnemonic_phrase):
+    def test_same_mnemonic_same_seed(self):
         """Test that the same mnemonic produces the same seed."""
-        mnemonic1 = Mnemonic(phrase=known_mnemonic_phrase)
-        mnemonic2 = Mnemonic(phrase=known_mnemonic_phrase)
+        mnemonic1 = Mnemonic(phrase=TEST_MNEMONIC_PHRASE)
+        mnemonic2 = Mnemonic(phrase=TEST_MNEMONIC_PHRASE)
         
         seed1 = mnemonic1.to_seed()
         seed2 = mnemonic2.to_seed()

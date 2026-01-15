@@ -35,30 +35,19 @@ class TestResolver:
         urls = resolver.urls()
         assert isinstance(urls, list)
 
-    async def test_resolver_get_url_with_string_encoding(self):
-        """Test getting a node URL from resolver with string encoding."""
+    @pytest.mark.parametrize("encoding", ["borsh", Encoding.Borsh])
+    async def test_resolver_get_url_with_encoding(self, encoding):
+        """Test getting a node URL from resolver with various encodings."""
         resolver = Resolver()
-        url = await resolver.get_url("borsh", "testnet-10")
+        url = await resolver.get_url(encoding, "testnet-10")
         assert isinstance(url, str)
         assert url.startswith("wss://") or url.startswith("ws://")
 
-    async def test_resolver_get_url_with_enum_encoding(self):
-        """Test getting a node URL from resolver with Encoding enum."""
+    @pytest.mark.parametrize("encoding", ["borsh", Encoding.Borsh])
+    async def test_resolver_get_node_with_encoding(self, encoding):
+        """Test getting node info from resolver with various encodings."""
         resolver = Resolver()
-        url = await resolver.get_url(Encoding.Borsh, "testnet-10")
-        assert isinstance(url, str)
-        assert url.startswith("wss://") or url.startswith("ws://")
-
-    async def test_resolver_get_node_with_string_encoding(self):
-        """Test getting node info from resolver with string encoding."""
-        resolver = Resolver()
-        node = await resolver.get_node("borsh", "testnet-10")
-        assert isinstance(node, dict)
-
-    async def test_resolver_get_node_with_enum_encoding(self):
-        """Test getting node info from resolver with Encoding enum."""
-        resolver = Resolver()
-        node = await resolver.get_node(Encoding.Borsh, "testnet-10")
+        node = await resolver.get_node(encoding, "testnet-10")
         assert isinstance(node, dict)
 
 
@@ -70,24 +59,10 @@ class TestRpcClientConnection:
         client = RpcClient(resolver=Resolver(), network_id="testnet-10")
         assert isinstance(client, RpcClient)
 
-    async def test_create_rpc_client_with_string_encoding(self):
-        """Test creating an RPC client with string encoding."""
-        client = RpcClient(resolver=Resolver(), network_id="testnet-10", encoding="borsh")
-        assert isinstance(client, RpcClient)
-
-    async def test_create_rpc_client_with_enum_encoding(self):
-        """Test creating an RPC client with Encoding enum."""
-        client = RpcClient(resolver=Resolver(), network_id="testnet-10", encoding=Encoding.Borsh)
-        assert isinstance(client, RpcClient)
-
-    async def test_create_rpc_client_with_json_string_encoding(self):
-        """Test creating an RPC client with 'json' string encoding."""
-        client = RpcClient(resolver=Resolver(), network_id="testnet-10", encoding="json")
-        assert isinstance(client, RpcClient)
-
-    async def test_create_rpc_client_with_json_enum_encoding(self):
-        """Test creating an RPC client with Encoding.SerdeJson enum."""
-        client = RpcClient(resolver=Resolver(), network_id="testnet-10", encoding=Encoding.SerdeJson)
+    @pytest.mark.parametrize("encoding", ["borsh", "json", Encoding.Borsh, Encoding.SerdeJson])
+    async def test_create_rpc_client_with_encoding(self, encoding):
+        """Test creating an RPC client with various encoding options."""
+        client = RpcClient(resolver=Resolver(), network_id="testnet-10", encoding=encoding)
         assert isinstance(client, RpcClient)
 
     async def test_rpc_client_connect_disconnect(self):

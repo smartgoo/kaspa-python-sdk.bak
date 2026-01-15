@@ -5,6 +5,7 @@ Unit tests for XPrv, XPub, and DerivationPath classes.
 import pytest
 
 from kaspa import XPrv, XPub, DerivationPath, PrivateKey, PublicKey
+from tests.conftest import TEST_MASTER_XPRV
 
 
 class TestXPrvCreation:
@@ -16,9 +17,9 @@ class TestXPrvCreation:
         xprv = XPrv(seed)
         assert isinstance(xprv, XPrv)
 
-    def test_create_xprv_from_xprv_string(self, known_master_xprv_string):
+    def test_create_xprv_from_xprv_string(self):
         """Test creating an XPrv from an xprv string."""
-        xprv = XPrv.from_xprv(known_master_xprv_string)
+        xprv = XPrv.from_xprv(TEST_MASTER_XPRV)
         assert isinstance(xprv, XPrv)
 
     def test_create_xprv_from_invalid_seed_raises(self):

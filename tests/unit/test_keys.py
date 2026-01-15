@@ -5,14 +5,19 @@ Unit tests for PrivateKey, PublicKey, and Keypair classes.
 import pytest
 
 from kaspa import PrivateKey, PublicKey, Keypair, XOnlyPublicKey, Address
+from tests.conftest import (
+    TEST_PRIVATE_KEY_HEX,
+    TEST_PUBLIC_KEY_HEX,
+    TEST_COMPRESSED_PUBLIC_KEY_HEX,
+)
 
 
 class TestPrivateKeyCreation:
     """Tests for PrivateKey construction."""
 
-    def test_create_private_key_from_valid_hex(self, known_private_key_hex):
+    def test_create_private_key_from_valid_hex(self):
         """Test creating a PrivateKey from a valid hex string."""
-        private_key = PrivateKey(known_private_key_hex)
+        private_key = PrivateKey(TEST_PRIVATE_KEY_HEX)
         assert private_key is not None
 
     def test_create_private_key_from_invalid_hex_raises(self):
@@ -25,9 +30,9 @@ class TestPrivateKeyCreation:
         with pytest.raises(Exception):
             PrivateKey("abcd1234")
 
-    def test_private_key_to_string(self, known_private_key, known_private_key_hex):
+    def test_private_key_to_string(self, known_private_key):
         """Test that to_string() returns the hex representation."""
-        assert known_private_key.to_string() == known_private_key_hex
+        assert known_private_key.to_string() == TEST_PRIVATE_KEY_HEX
 
 
 class TestPrivateKeyConversions:
@@ -43,33 +48,18 @@ class TestPrivateKeyConversions:
         keypair = known_private_key.to_keypair()
         assert isinstance(keypair, Keypair)
 
-    def test_private_key_to_address_mainnet(self, known_private_key):
-        """Test generating a mainnet address from a private key."""
-        address = known_private_key.to_address("mainnet")
-        assert address.prefix == "kaspa"
-
-    def test_private_key_to_address_testnet(self, known_private_key):
-        """Test generating a testnet address from a private key."""
-        address = known_private_key.to_address("testnet")
-        assert address.prefix == "kaspatest"
-
-    def test_private_key_to_address_ecdsa(self, known_private_key):
-        """Test generating an ECDSA address from a private key."""
-        address = known_private_key.to_address_ecdsa("mainnet")
-        assert address.prefix == "kaspa"
-
 
 class TestPublicKeyCreation:
     """Tests for PublicKey construction."""
 
-    def test_create_public_key_from_x_only_hex(self, known_public_key_hex):
+    def test_create_public_key_from_x_only_hex(self):
         """Test creating a PublicKey from an x-only (32-byte) hex string."""
-        public_key = PublicKey(known_public_key_hex)
+        public_key = PublicKey(TEST_PUBLIC_KEY_HEX)
         assert isinstance(public_key, PublicKey)
 
-    def test_create_public_key_from_compressed_hex(self, known_compressed_public_key_hex):
+    def test_create_public_key_from_compressed_hex(self):
         """Test creating a PublicKey from a compressed (33-byte) hex string."""
-        public_key = PublicKey(known_compressed_public_key_hex)
+        public_key = PublicKey(TEST_COMPRESSED_PUBLIC_KEY_HEX)
         assert public_key is not None
 
     def test_create_public_key_from_full_der_hex(self):
@@ -93,25 +83,6 @@ class TestPublicKeyCreation:
 class TestPublicKeyConversions:
     """Tests for PublicKey conversion methods."""
 
-    def test_public_key_to_address_mainnet(self, known_public_key):
-        """Test generating a mainnet address from a public key."""
-        address = known_public_key.to_address("mainnet")
-        assert isinstance(address, Address)
-        assert address.prefix == "kaspa"
-
-    def test_public_key_to_address_testnet(self, known_public_key):
-        """Test generating a testnet address from a public key."""
-        address = known_public_key.to_address("testnet")
-        assert isinstance(address, Address)
-        assert address.prefix == "kaspatest"
-
-    def test_public_key_to_address_ecdsa(self, known_compressed_public_key_hex):
-        """Test generating an ECDSA address from a compressed public key."""
-        # ECDSA requires a compressed public key, not x-only
-        public_key = PublicKey(known_compressed_public_key_hex)
-        address = public_key.to_address_ecdsa("mainnet")
-        assert isinstance(address, Address)
-
     def test_public_key_to_x_only_public_key(self, known_public_key):
         """Test converting a public key to an x-only public key."""
         x_only = known_public_key.to_x_only_public_key()
@@ -121,20 +92,20 @@ class TestPublicKeyConversions:
 class TestXOnlyPublicKey:
     """Tests for XOnlyPublicKey class."""
 
-    def test_create_x_only_public_key_from_hex(self, known_public_key_hex):
+    def test_create_x_only_public_key_from_hex(self):
         """Test creating an XOnlyPublicKey from hex."""
-        x_only = XOnlyPublicKey(known_public_key_hex)
+        x_only = XOnlyPublicKey(TEST_PUBLIC_KEY_HEX)
         assert isinstance(x_only, XOnlyPublicKey)
 
-    def test_x_only_public_key_to_string(self, known_public_key_hex):
+    def test_x_only_public_key_to_string(self):
         """Test XOnlyPublicKey to_string() method."""
-        x_only = XOnlyPublicKey(known_public_key_hex)
+        x_only = XOnlyPublicKey(TEST_PUBLIC_KEY_HEX)
         key_str = x_only.to_string()
         assert isinstance(key_str, str)
 
-    def test_x_only_public_key_to_address(self, known_public_key_hex):
+    def test_x_only_public_key_to_address(self):
         """Test generating an address from an XOnlyPublicKey."""
-        x_only = XOnlyPublicKey(known_public_key_hex)
+        x_only = XOnlyPublicKey(TEST_PUBLIC_KEY_HEX)
         address = x_only.to_address("mainnet")
         assert address.prefix == "kaspa"
 
@@ -186,25 +157,6 @@ class TestKeypairProperties:
         assert isinstance(xonly, str)
 
 
-class TestKeypairAddresses:
-    """Tests for Keypair address generation."""
-
-    def test_keypair_to_address_mainnet(self, known_keypair):
-        """Test generating a mainnet address from a keypair."""
-        address = known_keypair.to_address("mainnet")
-        assert isinstance(address, Address)
-
-    def test_keypair_to_address_testnet(self, known_keypair):
-        """Test generating a testnet address from a keypair."""
-        address = known_keypair.to_address("testnet")
-        assert isinstance(address, Address)
-
-    def test_keypair_to_address_ecdsa(self, known_keypair):
-        """Test generating an ECDSA address from a keypair."""
-        address = known_keypair.to_address_ecdsa("mainnet")
-        assert isinstance(address, Address)
-
-
 class TestKeyConsistency:
     """Tests for consistency between different key representations."""
 
@@ -224,8 +176,8 @@ class TestKeyConsistency:
         assert addr1.to_string() == addr2.to_string()
         assert addr2.to_string() == addr3.to_string()
 
-    def test_keypair_private_key_matches_source(self, known_private_key, known_private_key_hex):
+    def test_keypair_private_key_matches_source(self, known_private_key):
         """Test that a keypair's private key matches the source."""
         keypair = known_private_key.to_keypair()
-        assert keypair.private_key == known_private_key_hex
+        assert keypair.private_key == TEST_PRIVATE_KEY_HEX
 

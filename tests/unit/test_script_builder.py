@@ -25,70 +25,36 @@ class TestScriptBuilderCreation:
         builder = ScriptBuilder()
         assert isinstance(builder, ScriptBuilder)
 
-    def test_create_script_builder_from_script_hex(self):
-        """Test creating a ScriptBuilder from a hex script."""
-        # Simple OP_TRUE script
-        script_hex = "51"  # OP_TRUE
-        builder = ScriptBuilder.from_script(script_hex)
-        assert isinstance(builder, ScriptBuilder)
-
-    def test_create_script_builder_from_script_bytes(self):
-        """Test creating a ScriptBuilder from bytes."""
-        script_bytes = bytes([0x51])  # OP_TRUE
-        builder = ScriptBuilder.from_script(script_bytes)
-        assert isinstance(builder, ScriptBuilder)
-
-    def test_create_script_builder_from_script_list(self):
-        """Test creating a ScriptBuilder from a list of integers."""
-        script_list = [0x51]  # OP_TRUE
-        builder = ScriptBuilder.from_script(script_list)
+    @pytest.mark.parametrize("script_input", ["51", bytes([0x51]), [0x51]])
+    def test_create_script_builder_from_script(self, script_input):
+        """Test creating a ScriptBuilder from various input types (hex, bytes, list)."""
+        builder = ScriptBuilder.from_script(script_input)
         assert isinstance(builder, ScriptBuilder)
 
 
 class TestScriptBuilderOperations:
     """Tests for ScriptBuilder operations."""
 
-    def test_add_op_with_opcode_enum(self):
-        """Test adding an opcode using the Opcodes enum."""
+    @pytest.mark.parametrize("opcode", [Opcodes.OpTrue, 0x51])
+    def test_add_op(self, opcode):
+        """Test adding an opcode using Opcodes enum or integer."""
         builder = ScriptBuilder()
-        result = builder.add_op(Opcodes.OpTrue)
+        result = builder.add_op(opcode)
         # Method should return self for chaining
         assert isinstance(result, ScriptBuilder)
 
-    def test_add_op_with_int(self):
-        """Test adding an opcode using an integer."""
+    @pytest.mark.parametrize("opcodes", [[Opcodes.OpTrue, Opcodes.OpVerify], [0x51, 0x69]])
+    def test_add_ops(self, opcodes):
+        """Test adding multiple opcodes as enums or integers."""
         builder = ScriptBuilder()
-        result = builder.add_op(0x51)  # OP_TRUE
+        result = builder.add_ops(opcodes)
         assert isinstance(result, ScriptBuilder)
 
-    def test_add_ops_with_opcode_list(self):
-        """Test adding multiple opcodes."""
+    @pytest.mark.parametrize("data", ["deadbeef", bytes([0xde, 0xad, 0xbe, 0xef]), [0xde, 0xad, 0xbe, 0xef]])
+    def test_add_data(self, data):
+        """Test adding data as hex string, bytes, or list of integers."""
         builder = ScriptBuilder()
-        result = builder.add_ops([Opcodes.OpTrue, Opcodes.OpVerify])
-        assert isinstance(result, ScriptBuilder)
-
-    def test_add_ops_with_int_list(self):
-        """Test adding multiple opcodes as integers."""
-        builder = ScriptBuilder()
-        result = builder.add_ops([0x51, 0x69])  # OP_TRUE, OP_VERIFY
-        assert isinstance(result, ScriptBuilder)
-
-    def test_add_data_hex_string(self):
-        """Test adding data as a hex string."""
-        builder = ScriptBuilder()
-        result = builder.add_data("deadbeef")
-        assert isinstance(result, ScriptBuilder)
-
-    def test_add_data_bytes(self):
-        """Test adding data as bytes."""
-        builder = ScriptBuilder()
-        result = builder.add_data(bytes([0xde, 0xad, 0xbe, 0xef]))
-        assert isinstance(result, ScriptBuilder)
-
-    def test_add_data_list(self):
-        """Test adding data as a list of integers."""
-        builder = ScriptBuilder()
-        result = builder.add_data([0xde, 0xad, 0xbe, 0xef])
+        result = builder.add_data(data)
         assert isinstance(result, ScriptBuilder)
 
     def test_add_i64(self):

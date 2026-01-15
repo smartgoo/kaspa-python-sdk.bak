@@ -5,16 +5,17 @@ Unit tests for the Address class.
 import pytest
 
 from kaspa import Address, PublicKey, ScriptPublicKey, pay_to_address_script, address_from_script_public_key
+from tests.conftest import TEST_MAINNET_ADDRESS
 
 
 class TestAddressCreation:
     """Tests for Address construction and validation."""
 
-    def test_create_address_from_valid_mainnet_string(self, known_mainnet_address_string):
+    def test_create_address_from_valid_mainnet_string(self):
         """Test creating an Address from a valid mainnet address string."""
-        address = Address(known_mainnet_address_string)
+        address = Address(TEST_MAINNET_ADDRESS)
         assert isinstance(address, Address)
-        assert address.to_string() == known_mainnet_address_string
+        assert address.to_string() == TEST_MAINNET_ADDRESS
 
     def test_create_address_from_valid_testnet_string(self):
         """Test creating an Address from a valid testnet address string."""
@@ -28,9 +29,9 @@ class TestAddressCreation:
         with pytest.raises(Exception):
             Address("invalid_address_string")
 
-    def test_validate_valid_address_returns_true(self, known_mainnet_address_string):
+    def test_validate_valid_address_returns_true(self):
         """Test that validate() returns True for a valid address."""
-        assert Address.validate(known_mainnet_address_string) is True
+        assert Address.validate(TEST_MAINNET_ADDRESS) is True
 
     def test_validate_invalid_address_returns_false(self):
         """Test that validate() returns False for an invalid address."""
@@ -49,9 +50,9 @@ class TestAddressProperties:
         version = known_mainnet_address.version
         assert isinstance(version, str)
 
-    def test_address_to_string(self, known_mainnet_address, known_mainnet_address_string):
+    def test_address_to_string(self, known_mainnet_address):
         """Test to_string() returns the original address string."""
-        assert known_mainnet_address.to_string() == known_mainnet_address_string
+        assert known_mainnet_address.to_string() == TEST_MAINNET_ADDRESS
 
     def test_address_payload(self, known_mainnet_address):
         """Test that payload property returns the bech32 encoded payload."""
