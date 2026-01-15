@@ -58,7 +58,6 @@ class TestAddressProperties:
         payload = known_mainnet_address.payload
         assert isinstance(payload, str)
         assert len(payload) > 0
-        # Payload should be the address without the prefix and colon
         full_address = known_mainnet_address.to_string()
         expected_payload = full_address.split(":")[1]
         assert payload == expected_payload
@@ -67,9 +66,7 @@ class TestAddressProperties:
         """Test that short() returns a shortened address representation."""
         short_addr = known_mainnet_address.short(4)
         assert isinstance(short_addr, str)
-        # Should contain the prefix
         assert short_addr.startswith(known_mainnet_address.prefix + ":")
-        # Should contain the ellipsis pattern
         assert "...." in short_addr
 
 class TestAddressFromKey:

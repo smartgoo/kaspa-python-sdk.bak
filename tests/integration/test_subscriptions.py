@@ -223,14 +223,5 @@ class TestEventReceiving:
         testnet_rpc_client.add_event_listener("virtual-daa-score-changed", callback)
         await testnet_rpc_client.subscribe_virtual_daa_score_changed()
         
-        try:
-            # Wait up to 30 seconds for an event
-            await asyncio.wait_for(event_received.wait(), timeout=30.0)
-            assert len(received_events) > 0
-        except asyncio.TimeoutError:
-            # It's acceptable if no event is received in the timeout period
-            pytest.skip("No virtual DAA score event received within timeout")
-        finally:
-            await testnet_rpc_client.unsubscribe_virtual_daa_score_changed()
-            testnet_rpc_client.remove_event_listener("virtual-daa-score-changed", callback)
-
+        await asyncio.wait_for(event_received.wait(), timeout=30.0)
+        assert len(received_events) > 0

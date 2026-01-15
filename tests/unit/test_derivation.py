@@ -34,7 +34,6 @@ class TestXPrvProperties:
         """Test accessing the xprv property."""
         xprv_str = known_xprv_from_mnemonic.xprv
         assert isinstance(xprv_str, str)
-        # Default prefix is 'kprv'
         assert xprv_str.startswith("kprv")
 
     def test_xprv_private_key_property(self, known_xprv_from_mnemonic):
@@ -45,7 +44,7 @@ class TestXPrvProperties:
     def test_xprv_depth_property(self, known_xprv_from_mnemonic):
         """Test accessing the depth property."""
         depth = known_xprv_from_mnemonic.depth
-        assert depth == 0  # Master key has depth 0
+        assert depth == 0
 
     def test_xprv_chain_code_property(self, known_xprv_from_mnemonic):
         """Test accessing the chain_code property."""
@@ -60,7 +59,7 @@ class TestXPrvProperties:
     def test_xprv_child_number_property(self, known_xprv_from_mnemonic):
         """Test accessing the child_number property."""
         child_number = known_xprv_from_mnemonic.child_number
-        assert child_number == 0  # Master key has child number 0
+        assert child_number == 0
 
 
 class TestXPrvDerivation:
@@ -78,7 +77,6 @@ class TestXPrvDerivation:
 
     def test_derive_path_string(self, known_xprv_from_mnemonic):
         """Test deriving keys using a path string."""
-        # Standard Kaspa derivation path: m/44'/111111'/0'
         derived = known_xprv_from_mnemonic.derive_path("m/44'/111111'/0'")
         assert derived.depth == 3
 
