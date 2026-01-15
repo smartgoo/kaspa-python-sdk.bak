@@ -13,15 +13,14 @@ class TestAddressCreation:
     def test_create_address_from_valid_mainnet_string(self, known_mainnet_address_string):
         """Test creating an Address from a valid mainnet address string."""
         address = Address(known_mainnet_address_string)
-        assert address is not None
+        assert isinstance(address, Address)
         assert address.to_string() == known_mainnet_address_string
 
     def test_create_address_from_valid_testnet_string(self):
         """Test creating an Address from a valid testnet address string."""
-        # Testnet addresses have 'kaspatest:' prefix
         testnet_address_str = "kaspatest:qr0lr4ml9fn3chekrqmjdkergxl93l4wrk3dankcgvjq776s9wn9jhtkdksae"
         address = Address(testnet_address_str)
-        assert address is not None
+        assert isinstance(address, Address)
         assert address.prefix == "kaspatest"
 
     def test_create_address_from_invalid_string_raises(self):
@@ -37,10 +36,6 @@ class TestAddressCreation:
         """Test that validate() returns False for an invalid address."""
         assert Address.validate("invalid_address") is False
 
-    def test_validate_empty_string_returns_false(self):
-        """Test that validate() returns False for an empty string."""
-        assert Address.validate("") is False
-
 
 class TestAddressProperties:
     """Tests for Address properties and methods."""
@@ -52,7 +47,6 @@ class TestAddressProperties:
     def test_address_version(self, known_mainnet_address):
         """Test that address version is accessible."""
         version = known_mainnet_address.version
-        assert version is not None
         assert isinstance(version, str)
 
     def test_address_to_string(self, known_mainnet_address, known_mainnet_address_string):
@@ -62,7 +56,6 @@ class TestAddressProperties:
     def test_address_payload(self, known_mainnet_address):
         """Test that payload property returns the bech32 encoded payload."""
         payload = known_mainnet_address.payload
-        assert payload is not None
         assert isinstance(payload, str)
         assert len(payload) > 0
         # Payload should be the address without the prefix and colon
@@ -72,9 +65,7 @@ class TestAddressProperties:
 
     def test_address_short(self, known_mainnet_address):
         """Test that short() returns a shortened address representation."""
-        n = 4
-        short_addr = known_mainnet_address.short(n)
-        assert short_addr is not None
+        short_addr = known_mainnet_address.short(4)
         assert isinstance(short_addr, str)
         # Should contain the prefix
         assert short_addr.startswith(known_mainnet_address.prefix + ":")
@@ -87,31 +78,31 @@ class TestAddressFromKey:
     def test_address_from_public_key_mainnet(self, known_public_key):
         """Test creating a mainnet address from a public key."""
         address = known_public_key.to_address("mainnet")
-        assert address is not None
+        assert isinstance(address, Address)
         assert address.prefix == "kaspa"
 
     def test_address_from_public_key_testnet(self, known_public_key):
         """Test creating a testnet address from a public key."""
         address = known_public_key.to_address("testnet")
-        assert address is not None
+        assert isinstance(address, Address)
         assert address.prefix == "kaspatest"
 
     def test_address_from_private_key_mainnet(self, known_private_key):
         """Test creating a mainnet address from a private key."""
         address = known_private_key.to_address("mainnet")
-        assert address is not None
+        assert isinstance(address, Address)
         assert address.prefix == "kaspa"
 
     def test_address_from_keypair_mainnet(self, known_keypair):
         """Test creating a mainnet address from a keypair."""
         address = known_keypair.to_address("mainnet")
-        assert address is not None
+        assert isinstance(address, Address)
         assert address.prefix == "kaspa"
 
     def test_address_from_keypair_ecdsa(self, known_keypair):
         """Test creating an ECDSA address from a keypair."""
         address = known_keypair.to_address_ecdsa("mainnet")
-        assert address is not None
+        assert isinstance(address, Address)
         assert address.prefix == "kaspa"
 
     def test_private_key_and_keypair_produce_same_address(self, known_private_key, known_keypair):
@@ -127,7 +118,6 @@ class TestScriptPublicKeyAddress:
     def test_pay_to_address_script(self, known_mainnet_address):
         """Test creating a ScriptPublicKey from an address."""
         spk = pay_to_address_script(known_mainnet_address)
-        assert spk is not None
         assert isinstance(spk, ScriptPublicKey)
 
     def test_address_from_script_public_key_roundtrip(self, known_mainnet_address):

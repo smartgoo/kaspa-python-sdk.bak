@@ -23,26 +23,26 @@ class TestScriptBuilderCreation:
     def test_create_empty_script_builder(self):
         """Test creating an empty ScriptBuilder."""
         builder = ScriptBuilder()
-        assert builder is not None
+        assert isinstance(builder, ScriptBuilder)
 
     def test_create_script_builder_from_script_hex(self):
         """Test creating a ScriptBuilder from a hex script."""
         # Simple OP_TRUE script
         script_hex = "51"  # OP_TRUE
         builder = ScriptBuilder.from_script(script_hex)
-        assert builder is not None
+        assert isinstance(builder, ScriptBuilder)
 
     def test_create_script_builder_from_script_bytes(self):
         """Test creating a ScriptBuilder from bytes."""
         script_bytes = bytes([0x51])  # OP_TRUE
         builder = ScriptBuilder.from_script(script_bytes)
-        assert builder is not None
+        assert isinstance(builder, ScriptBuilder)
 
     def test_create_script_builder_from_script_list(self):
         """Test creating a ScriptBuilder from a list of integers."""
         script_list = [0x51]  # OP_TRUE
         builder = ScriptBuilder.from_script(script_list)
-        assert builder is not None
+        assert isinstance(builder, ScriptBuilder)
 
 
 class TestScriptBuilderOperations:
@@ -52,7 +52,6 @@ class TestScriptBuilderOperations:
         """Test adding an opcode using the Opcodes enum."""
         builder = ScriptBuilder()
         result = builder.add_op(Opcodes.OpTrue)
-        assert result is not None
         # Method should return self for chaining
         assert isinstance(result, ScriptBuilder)
 
@@ -60,55 +59,55 @@ class TestScriptBuilderOperations:
         """Test adding an opcode using an integer."""
         builder = ScriptBuilder()
         result = builder.add_op(0x51)  # OP_TRUE
-        assert result is not None
+        assert isinstance(result, ScriptBuilder)
 
     def test_add_ops_with_opcode_list(self):
         """Test adding multiple opcodes."""
         builder = ScriptBuilder()
         result = builder.add_ops([Opcodes.OpTrue, Opcodes.OpVerify])
-        assert result is not None
+        assert isinstance(result, ScriptBuilder)
 
     def test_add_ops_with_int_list(self):
         """Test adding multiple opcodes as integers."""
         builder = ScriptBuilder()
         result = builder.add_ops([0x51, 0x69])  # OP_TRUE, OP_VERIFY
-        assert result is not None
+        assert isinstance(result, ScriptBuilder)
 
     def test_add_data_hex_string(self):
         """Test adding data as a hex string."""
         builder = ScriptBuilder()
         result = builder.add_data("deadbeef")
-        assert result is not None
+        assert isinstance(result, ScriptBuilder)
 
     def test_add_data_bytes(self):
         """Test adding data as bytes."""
         builder = ScriptBuilder()
         result = builder.add_data(bytes([0xde, 0xad, 0xbe, 0xef]))
-        assert result is not None
+        assert isinstance(result, ScriptBuilder)
 
     def test_add_data_list(self):
         """Test adding data as a list of integers."""
         builder = ScriptBuilder()
         result = builder.add_data([0xde, 0xad, 0xbe, 0xef])
-        assert result is not None
+        assert isinstance(result, ScriptBuilder)
 
     def test_add_i64(self):
         """Test adding an i64 value."""
         builder = ScriptBuilder()
         result = builder.add_i64(12345)
-        assert result is not None
+        assert isinstance(result, ScriptBuilder)
 
     def test_add_lock_time(self):
         """Test adding a lock time."""
         builder = ScriptBuilder()
         result = builder.add_lock_time(1000000)
-        assert result is not None
+        assert isinstance(result, ScriptBuilder)
 
     def test_add_sequence(self):
         """Test adding a sequence number."""
         builder = ScriptBuilder()
         result = builder.add_sequence(0xFFFFFFFF)
-        assert result is not None
+        assert isinstance(result, ScriptBuilder)
 
 
 class TestScriptBuilderChaining:
@@ -134,7 +133,7 @@ class TestScriptBuilderChaining:
         builder.add_op(Opcodes.OpCheckSig)
         
         script_str = builder.to_string()
-        assert script_str is not None
+        assert isinstance(script_str, str)
         assert len(script_str) > 0
 
 
@@ -147,7 +146,6 @@ class TestScriptBuilderOutput:
         builder.add_op(Opcodes.OpTrue)
         
         script_str = builder.to_string()
-        assert script_str is not None
         assert isinstance(script_str, str)
 
     def test_drain(self):
@@ -156,7 +154,6 @@ class TestScriptBuilderOutput:
         builder.add_op(Opcodes.OpTrue)
         
         script = builder.drain()
-        assert script is not None
         assert isinstance(script, str)
 
 
@@ -170,7 +167,6 @@ class TestScriptBuilderP2SH:
         redeem_script_builder.add_op(Opcodes.OpTrue)
         
         p2sh_spk = redeem_script_builder.create_pay_to_script_hash_script()
-        assert p2sh_spk is not None
         assert isinstance(p2sh_spk, ScriptPublicKey)
 
     def test_encode_pay_to_script_hash_signature_script(self):
@@ -182,7 +178,6 @@ class TestScriptBuilderP2SH:
         # Encode signature script (with empty signature for testing)
         signature = "00"
         sig_script = redeem_script_builder.encode_pay_to_script_hash_signature_script(signature)
-        assert sig_script is not None
         assert isinstance(sig_script, str)
 
 
@@ -248,14 +243,13 @@ class TestScriptHelperFunctions:
         """Test pay_to_script_hash_script with hex input."""
         redeem_script = "51"  # OP_TRUE
         result = pay_to_script_hash_script(redeem_script)
-        assert result is not None
+        assert isinstance(result, ScriptPublicKey)
 
     def test_pay_to_script_hash_signature_script(self):
         """Test pay_to_script_hash_signature_script."""
         redeem_script = "51"  # OP_TRUE
         signature = "00"
         result = pay_to_script_hash_signature_script(redeem_script, signature)
-        assert result is not None
         assert isinstance(result, str)
 
 

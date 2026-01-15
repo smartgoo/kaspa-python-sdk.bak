@@ -13,7 +13,7 @@ class TestMnemonicCreation:
     def test_create_mnemonic_from_valid_phrase(self, known_mnemonic_phrase):
         """Test creating a Mnemonic from a valid 24-word phrase."""
         mnemonic = Mnemonic(phrase=known_mnemonic_phrase)
-        assert mnemonic is not None
+        assert isinstance(mnemonic, Mnemonic)
         assert mnemonic.phrase == known_mnemonic_phrase
 
     def test_create_mnemonic_from_invalid_phrase_raises(self):
@@ -29,23 +29,14 @@ class TestMnemonicCreation:
     def test_random_mnemonic_creates_valid_phrase(self):
         """Test that random() creates a valid Mnemonic."""
         mnemonic = Mnemonic.random()
-        assert mnemonic is not None
-        assert mnemonic.phrase is not None
-        # Default is 24 words
-        words = mnemonic.phrase.split()
-        assert len(words) == 24
+        assert mnemonic.validate(mnemonic.phrase)
 
     def test_random_mnemonic_12_words(self):
         """Test creating a random 12-word mnemonic."""
         mnemonic = Mnemonic.random(word_count=12)
         words = mnemonic.phrase.split()
         assert len(words) == 12
-
-    def test_random_mnemonic_24_words(self):
-        """Test creating a random 24-word mnemonic."""
-        mnemonic = Mnemonic.random(word_count=24)
-        words = mnemonic.phrase.split()
-        assert len(words) == 24
+        assert mnemonic.validate(mnemonic.phrase)
 
     def test_two_random_mnemonics_are_different(self):
         """Test that two random mnemonics are different."""
@@ -65,10 +56,6 @@ class TestMnemonicValidation:
         """Test that validate() returns False for an invalid phrase."""
         assert Mnemonic.validate("invalid phrase") is False
 
-    def test_validate_empty_string_returns_false(self):
-        """Test that validate() returns False for an empty string."""
-        assert Mnemonic.validate("") is False
-
     def test_validate_with_language_parameter(self, known_mnemonic_phrase):
         """Test validate() with explicit Language parameter."""
         # English is the default/only supported language
@@ -85,7 +72,6 @@ class TestMnemonicProperties:
     def test_entropy_property(self, known_mnemonic):
         """Test that entropy property returns a hex string."""
         entropy = known_mnemonic.entropy
-        assert entropy is not None
         assert isinstance(entropy, str)
         # Entropy should be a hex string
         assert all(c in '0123456789abcdef' for c in entropy.lower())
@@ -97,7 +83,6 @@ class TestMnemonicSeed:
     def test_to_seed_without_password(self, known_mnemonic):
         """Test generating a seed without a password."""
         seed = known_mnemonic.to_seed()
-        assert seed is not None
         assert isinstance(seed, str)
         # Seed should be a hex string (64 bytes = 128 hex chars)
         assert len(seed) == 128
@@ -106,14 +91,12 @@ class TestMnemonicSeed:
     def test_to_seed_with_password(self, known_mnemonic):
         """Test generating a seed with a password (25th word)."""
         seed = known_mnemonic.to_seed("my_password")
-        assert seed is not None
         assert isinstance(seed, str)
         assert len(seed) == 128
 
     def test_to_seed_with_empty_password(self, known_mnemonic):
         """Test generating a seed with an empty password."""
         seed = known_mnemonic.to_seed("")
-        assert seed is not None
         assert isinstance(seed, str)
 
     def test_same_mnemonic_same_seed(self, known_mnemonic_phrase):

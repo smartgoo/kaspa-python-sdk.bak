@@ -2,16 +2,12 @@
 Unit tests for PublicKeyGenerator and PrivateKeyGenerator classes.
 """
 
-import pytest
-
 from kaspa import (
     PublicKeyGenerator,
     PrivateKeyGenerator,
     PublicKey,
     PrivateKey,
     Address,
-    Mnemonic,
-    XPrv,
 )
 
 
@@ -25,7 +21,7 @@ class TestPublicKeyGeneratorCreation:
             is_multisig=False,
             account_index=0
         )
-        assert pubkey_gen is not None
+        assert isinstance(pubkey_gen, PublicKeyGenerator)
 
     def test_create_from_master_xprv_different_account(self, known_master_xprv_string):
         """Test creating a PublicKeyGenerator for a different account index."""
@@ -34,7 +30,7 @@ class TestPublicKeyGeneratorCreation:
             is_multisig=False,
             account_index=1
         )
-        assert pubkey_gen is not None
+        assert isinstance(pubkey_gen, PublicKeyGenerator)
 
     def test_create_from_xpub(self, known_xprv_from_mnemonic):
         """Test creating a PublicKeyGenerator from an xpub string."""
@@ -44,7 +40,7 @@ class TestPublicKeyGeneratorCreation:
         xpub_str = account_xpub.xpub
         
         pubkey_gen = PublicKeyGenerator.from_xpub(xpub_str)
-        assert pubkey_gen is not None
+        assert isinstance(pubkey_gen, PublicKeyGenerator)
 
 
 class TestPublicKeyGeneratorReceiveKeys:
@@ -59,7 +55,6 @@ class TestPublicKeyGeneratorReceiveKeys:
         )
         
         pubkey = pubkey_gen.receive_pubkey(0)
-        assert pubkey is not None
         assert isinstance(pubkey, PublicKey)
 
     def test_receive_pubkeys_range(self, known_master_xprv_string):
@@ -84,7 +79,6 @@ class TestPublicKeyGeneratorReceiveKeys:
         )
         
         key_str = pubkey_gen.receive_pubkey_as_string(0)
-        assert key_str is not None
         assert isinstance(key_str, str)
         assert len(key_str) > 0
 
@@ -114,7 +108,6 @@ class TestPublicKeyGeneratorReceiveAddresses:
         )
         
         address = pubkey_gen.receive_address("mainnet", 0)
-        assert address is not None
         assert isinstance(address, Address)
         assert address.prefix == "kaspa"
 
@@ -141,7 +134,6 @@ class TestPublicKeyGeneratorReceiveAddresses:
         )
         
         addr_str = pubkey_gen.receive_address_as_string("mainnet", 0)
-        assert addr_str is not None
         assert addr_str.startswith("kaspa:")
 
     def test_receive_addresses_as_strings(self, known_master_xprv_string):
@@ -170,7 +162,6 @@ class TestPublicKeyGeneratorChangeKeys:
         )
         
         pubkey = pubkey_gen.change_pubkey(0)
-        assert pubkey is not None
         assert isinstance(pubkey, PublicKey)
 
     def test_change_pubkeys_range(self, known_master_xprv_string):
@@ -193,7 +184,6 @@ class TestPublicKeyGeneratorChangeKeys:
         )
         
         address = pubkey_gen.change_address("mainnet", 0)
-        assert address is not None
         assert address.prefix == "kaspa"
 
     def test_change_addresses_range(self, known_master_xprv_string):
@@ -246,7 +236,6 @@ class TestPublicKeyGeneratorToString:
         )
         
         gen_str = pubkey_gen.to_string()
-        assert gen_str is not None
         assert isinstance(gen_str, str)
 
 
@@ -325,7 +314,6 @@ class TestPrivateKeyGeneratorKeys:
         )
         
         private_key = privkey_gen.receive_key(0)
-        assert private_key is not None
         assert isinstance(private_key, PrivateKey)
 
     def test_change_key(self, known_master_xprv_string):
@@ -337,7 +325,6 @@ class TestPrivateKeyGeneratorKeys:
         )
         
         private_key = privkey_gen.change_key(0)
-        assert private_key is not None
         assert isinstance(private_key, PrivateKey)
 
     def test_receive_key_different_indices(self, known_master_xprv_string):
