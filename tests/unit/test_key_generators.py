@@ -39,7 +39,7 @@ class TestPublicKeyGeneratorCreation:
         account_xprv = known_xprv_from_mnemonic.derive_path("m/44'/111111'/0'")
         account_xpub = account_xprv.to_xpub()
         xpub_str = account_xpub.xpub
-        
+
         pubkey_gen = PublicKeyGenerator.from_xpub(xpub_str)
         assert isinstance(pubkey_gen, PublicKeyGenerator)
 
@@ -54,7 +54,7 @@ class TestPublicKeyGeneratorReceiveKeys:
             is_multisig=False,
             account_index=0
         )
-        
+
         pubkey = pubkey_gen.receive_pubkey(0)
         assert isinstance(pubkey, PublicKey)
 
@@ -65,7 +65,7 @@ class TestPublicKeyGeneratorReceiveKeys:
             is_multisig=False,
             account_index=0
         )
-        
+
         pubkeys = pubkey_gen.receive_pubkeys(0, 10)
         assert len(pubkeys) == 10
         for key in pubkeys:
@@ -78,7 +78,7 @@ class TestPublicKeyGeneratorReceiveKeys:
             is_multisig=False,
             account_index=0
         )
-        
+
         key_str = pubkey_gen.receive_pubkey_as_string(0)
         assert isinstance(key_str, str)
         assert len(key_str) > 0
@@ -90,7 +90,7 @@ class TestPublicKeyGeneratorReceiveKeys:
             is_multisig=False,
             account_index=0
         )
-        
+
         key_strs = pubkey_gen.receive_pubkeys_as_strings(0, 5)
         assert len(key_strs) == 5
         for key_str in key_strs:
@@ -107,7 +107,7 @@ class TestPublicKeyGeneratorReceiveAddresses:
             is_multisig=False,
             account_index=0
         )
-        
+
         address = pubkey_gen.receive_address("mainnet", 0)
         assert isinstance(address, Address)
         assert address.prefix == "kaspa"
@@ -119,7 +119,7 @@ class TestPublicKeyGeneratorReceiveAddresses:
             is_multisig=False,
             account_index=0
         )
-        
+
         addresses = pubkey_gen.receive_addresses("mainnet", 0, 10)
         assert len(addresses) == 10
         for addr in addresses:
@@ -133,7 +133,7 @@ class TestPublicKeyGeneratorReceiveAddresses:
             is_multisig=False,
             account_index=0
         )
-        
+
         addr_str = pubkey_gen.receive_address_as_string("mainnet", 0)
         assert addr_str.startswith("kaspa:")
 
@@ -144,7 +144,7 @@ class TestPublicKeyGeneratorReceiveAddresses:
             is_multisig=False,
             account_index=0
         )
-        
+
         addr_strs = pubkey_gen.receive_addresses_as_strings("mainnet", 0, 5)
         assert len(addr_strs) == 5
         for addr_str in addr_strs:
@@ -161,7 +161,7 @@ class TestPublicKeyGeneratorChangeKeys:
             is_multisig=False,
             account_index=0
         )
-        
+
         pubkey = pubkey_gen.change_pubkey(0)
         assert isinstance(pubkey, PublicKey)
 
@@ -172,7 +172,7 @@ class TestPublicKeyGeneratorChangeKeys:
             is_multisig=False,
             account_index=0
         )
-        
+
         pubkeys = pubkey_gen.change_pubkeys(0, 10)
         assert len(pubkeys) == 10
 
@@ -183,7 +183,7 @@ class TestPublicKeyGeneratorChangeKeys:
             is_multisig=False,
             account_index=0
         )
-        
+
         address = pubkey_gen.change_address("mainnet", 0)
         assert address.prefix == "kaspa"
 
@@ -194,7 +194,7 @@ class TestPublicKeyGeneratorChangeKeys:
             is_multisig=False,
             account_index=0
         )
-        
+
         addresses = pubkey_gen.change_addresses("mainnet", 0, 10)
         assert len(addresses) == 10
 
@@ -209,7 +209,7 @@ class TestPublicKeyGeneratorDifferentNetworks:
             is_multisig=False,
             account_index=0
         )
-        
+
         address = pubkey_gen.receive_address("testnet", 0)
         assert address.prefix == "kaspatest"
 
@@ -220,7 +220,7 @@ class TestPublicKeyGeneratorDifferentNetworks:
             is_multisig=False,
             account_index=0
         )
-        
+
         address = pubkey_gen.change_address("testnet", 0)
         assert address.prefix == "kaspatest"
 
@@ -235,7 +235,7 @@ class TestPublicKeyGeneratorToString:
             is_multisig=False,
             account_index=0
         )
-        
+
         gen_str = pubkey_gen.to_string()
         assert isinstance(gen_str, str)
 
@@ -284,7 +284,7 @@ class TestPrivateKeyGeneratorCreation:
     def test_string_and_xprv_produce_same_keys(self, known_xprv_from_mnemonic):
         """Test that creating from string vs XPrv produces the same keys."""
         xprv_string = known_xprv_from_mnemonic.to_string()
-        
+
         gen_from_string = PrivateKeyGenerator(
             xprv=xprv_string,
             is_multisig=False,
@@ -295,11 +295,11 @@ class TestPrivateKeyGeneratorCreation:
             is_multisig=False,
             account_index=0
         )
-        
+
         # Both should produce identical keys
         key_from_string = gen_from_string.receive_key(0)
         key_from_xprv = gen_from_xprv.receive_key(0)
-        
+
         assert key_from_string.to_string() == key_from_xprv.to_string()
 
 
@@ -313,7 +313,7 @@ class TestPrivateKeyGeneratorKeys:
             is_multisig=False,
             account_index=0
         )
-        
+
         private_key = privkey_gen.receive_key(0)
         assert isinstance(private_key, PrivateKey)
 
@@ -324,7 +324,7 @@ class TestPrivateKeyGeneratorKeys:
             is_multisig=False,
             account_index=0
         )
-        
+
         private_key = privkey_gen.change_key(0)
         assert isinstance(private_key, PrivateKey)
 
@@ -335,10 +335,10 @@ class TestPrivateKeyGeneratorKeys:
             is_multisig=False,
             account_index=0
         )
-        
+
         key0 = privkey_gen.receive_key(0)
         key1 = privkey_gen.receive_key(1)
-        
+
         assert key0.to_string() != key1.to_string()
 
 
@@ -352,20 +352,20 @@ class TestKeyGeneratorConsistency:
             is_multisig=False,
             account_index=0
         )
-        
+
         privkey_gen = PrivateKeyGenerator(
             xprv=TEST_MASTER_XPRV,
             is_multisig=False,
             account_index=0
         )
-        
+
         # Get receive address from public key generator
         addr_from_pubgen = pubkey_gen.receive_address("mainnet", 0)
-        
+
         # Get receive private key and derive address
         private_key = privkey_gen.receive_key(0)
         addr_from_privgen = private_key.to_address("mainnet")
-        
+
         assert addr_from_pubgen.to_string() == addr_from_privgen.to_string()
 
     def test_change_keys_consistency(self):
@@ -375,19 +375,18 @@ class TestKeyGeneratorConsistency:
             is_multisig=False,
             account_index=0
         )
-        
+
         privkey_gen = PrivateKeyGenerator(
             xprv=TEST_MASTER_XPRV,
             is_multisig=False,
             account_index=0
         )
-        
+
         # Get change address from public key generator
         addr_from_pubgen = pubkey_gen.change_address("mainnet", 0)
-        
+
         # Get change private key and derive address
         private_key = privkey_gen.change_key(0)
         addr_from_privgen = private_key.to_address("mainnet")
-        
-        assert addr_from_pubgen.to_string() == addr_from_privgen.to_string()
 
+        assert addr_from_pubgen.to_string() == addr_from_privgen.to_string()

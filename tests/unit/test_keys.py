@@ -164,15 +164,15 @@ class TestKeyConsistency:
         """Test that derived keys produce the same address."""
         # Get address directly from private key
         addr1 = known_private_key.to_address("mainnet")
-        
+
         # Get address via public key
         public_key = known_private_key.to_public_key()
         addr2 = public_key.to_address("mainnet")
-        
+
         # Get address via keypair
         keypair = known_private_key.to_keypair()
         addr3 = keypair.to_address("mainnet")
-        
+
         assert addr1.to_string() == addr2.to_string()
         assert addr2.to_string() == addr3.to_string()
 
@@ -180,4 +180,3 @@ class TestKeyConsistency:
         """Test that a keypair's private key matches the source."""
         keypair = known_private_key.to_keypair()
         assert keypair.private_key == TEST_PRIVATE_KEY_HEX
-

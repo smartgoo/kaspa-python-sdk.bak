@@ -70,6 +70,7 @@ class TestAddressProperties:
         assert short_addr.startswith(known_mainnet_address.prefix + ":")
         assert "...." in short_addr
 
+
 class TestAddressFromKey:
     """Tests for creating addresses from keys."""
 
@@ -123,4 +124,3 @@ class TestScriptPublicKeyAddress:
         spk = pay_to_address_script(known_mainnet_address)
         recovered_address = address_from_script_public_key(spk, "mainnet")
         assert recovered_address.to_string() == known_mainnet_address.to_string()
-

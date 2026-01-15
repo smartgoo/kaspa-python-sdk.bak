@@ -97,7 +97,7 @@ class TestScriptBuilderChaining:
         builder.add_op(Opcodes.OpBlake2b)
         builder.add_op(Opcodes.OpEqualVerify)
         builder.add_op(Opcodes.OpCheckSig)
-        
+
         script_str = builder.to_string()
         assert isinstance(script_str, str)
         assert len(script_str) > 0
@@ -110,7 +110,7 @@ class TestScriptBuilderOutput:
         """Test converting script to string."""
         builder = ScriptBuilder()
         builder.add_op(Opcodes.OpTrue)
-        
+
         script_str = builder.to_string()
         assert isinstance(script_str, str)
 
@@ -118,7 +118,7 @@ class TestScriptBuilderOutput:
         """Test draining the script."""
         builder = ScriptBuilder()
         builder.add_op(Opcodes.OpTrue)
-        
+
         script = builder.drain()
         assert isinstance(script, str)
 
@@ -131,7 +131,7 @@ class TestScriptBuilderP2SH:
         # Create a simple redeem script
         redeem_script_builder = ScriptBuilder()
         redeem_script_builder.add_op(Opcodes.OpTrue)
-        
+
         p2sh_spk = redeem_script_builder.create_pay_to_script_hash_script()
         assert isinstance(p2sh_spk, ScriptPublicKey)
 
@@ -140,10 +140,11 @@ class TestScriptBuilderP2SH:
         # Create a redeem script
         redeem_script_builder = ScriptBuilder()
         redeem_script_builder.add_op(Opcodes.OpTrue)
-        
+
         # Encode signature script (with empty signature for testing)
         signature = "00"
-        sig_script = redeem_script_builder.encode_pay_to_script_hash_signature_script(signature)
+        sig_script = redeem_script_builder.encode_pay_to_script_hash_signature_script(
+            signature)
         assert isinstance(sig_script, str)
 
 
@@ -240,4 +241,3 @@ class TestScriptTypeDetection:
         """Test detecting pay-to-script-hash scripts."""
         result = is_script_pay_to_script_hash("00")
         assert isinstance(result, bool)
-

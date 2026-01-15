@@ -100,12 +100,10 @@ def known_mainnet_address() -> Address:
 async def testnet_rpc_client():
     """
     Session-scoped async fixture for RPC client connected to testnet.
-    
+
     This fixture is used for integration tests that require network access.
     """
     client = RpcClient(resolver=Resolver(), network_id="testnet-10")
     await client.connect()
     yield client
     await client.disconnect()
-
-

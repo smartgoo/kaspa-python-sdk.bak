@@ -119,7 +119,7 @@ class TestMessageSigning:
         """Test signing a message."""
         message = "Hello Kaspa!"
         signature = sign_message(message, known_private_key)
-        
+
         assert isinstance(signature, str)
         assert len(signature) > 0
 
@@ -127,7 +127,7 @@ class TestMessageSigning:
         """Test verifying a valid message signature."""
         message = "Hello Kaspa!"
         signature = sign_message(message, known_private_key)
-        
+
         is_valid = verify_message(message, signature, known_public_key)
         assert is_valid is True
 
@@ -136,7 +136,7 @@ class TestMessageSigning:
         message = "Hello Kaspa!"
         # Invalid signature (random hex)
         fake_signature = "a" * 128
-        
+
         is_valid = verify_message(message, fake_signature, known_public_key)
         assert is_valid is False
 
@@ -144,30 +144,30 @@ class TestMessageSigning:
         """Test verifying with wrong message returns False."""
         message1 = "Hello Kaspa!"
         message2 = "Wrong message"
-        
+
         signature = sign_message(message1, known_private_key)
         is_valid = verify_message(message2, signature, known_public_key)
-        
+
         assert is_valid is False
 
     def test_verify_message_wrong_public_key(self, known_private_key):
         """Test verifying with wrong public key returns False."""
         message = "Hello Kaspa!"
         signature = sign_message(message, known_private_key)
-        
+
         # Use a different public key (valid but different)
         other_key = PrivateKey("1" * 64).to_public_key()
-        
+
         is_valid = verify_message(message, signature, other_key)
         assert is_valid is False
 
     def test_sign_message_with_no_aux_rand(self, known_private_key):
         """Test signing with no_aux_rand option."""
         message = "Deterministic signing"
-        
+
         sig1 = sign_message(message, known_private_key, no_aux_rand=True)
         sig2 = sign_message(message, known_private_key, no_aux_rand=True)
-        
+
         # With no_aux_rand, signatures should be deterministic
         assert sig1 == sig2
 
@@ -175,7 +175,7 @@ class TestMessageSigning:
         """Test signing an empty message."""
         message = ""
         signature = sign_message(message, known_private_key)
-        
+
         assert isinstance(signature, str)
 
 
@@ -192,7 +192,7 @@ class TestHash:
         """Test Hash to_string method."""
         hex_str = "b" * 64
         hash_obj = Hash(hex_str)
-        
+
         result = hash_obj.to_string()
         assert isinstance(result, str)
 
@@ -227,22 +227,22 @@ class TestMultisigAddress:
         # Create public keys from private keys (not x-only)
         priv_key1 = PrivateKey("1" * 64)
         pub_key1 = priv_key1.to_public_key()
-        
+
         priv_key2 = PrivateKey("2" * 64)
         pub_key2 = priv_key2.to_public_key()
-        
+
         priv_key3 = PrivateKey("3" * 64)
         pub_key3 = priv_key3.to_public_key()
-        
+
         # Use PublicKey objects directly
         keys = [pub_key1, pub_key2, pub_key3]
-        
+
         multisig_address = create_multisig_address(
             minimum_signatures=2,
             keys=keys,
             network_type="mainnet"
         )
-        
+
         assert isinstance(multisig_address, Address)
         assert multisig_address.prefix == "kaspa"
 
@@ -250,19 +250,19 @@ class TestMultisigAddress:
         """Test creating a testnet multisig address."""
         priv_key1 = PrivateKey("1" * 64)
         pub_key1 = priv_key1.to_public_key()
-        
+
         priv_key2 = PrivateKey("2" * 64)
         pub_key2 = priv_key2.to_public_key()
-        
+
         # Use PublicKey objects directly
         keys = [pub_key1, pub_key2]
-        
+
         multisig_address = create_multisig_address(
             minimum_signatures=1,
             keys=keys,
             network_type="testnet"
         )
-        
+
         assert isinstance(multisig_address, Address)
         assert multisig_address.prefix == "kaspatest"
 
@@ -271,19 +271,18 @@ class TestMultisigAddress:
         # For ECDSA, use public keys from private keys
         priv_key1 = PrivateKey("1" * 64)
         pub_key1 = priv_key1.to_public_key()
-        
+
         priv_key2 = PrivateKey("2" * 64)
         pub_key2 = priv_key2.to_public_key()
-        
+
         # Use PublicKey objects directly
         keys = [pub_key1, pub_key2]
-        
+
         multisig_address = create_multisig_address(
             minimum_signatures=1,
             keys=keys,
             network_type="mainnet",
             ecdsa=True
         )
-        
-        assert isinstance(multisig_address, Address)
 
+        assert isinstance(multisig_address, Address)

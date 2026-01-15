@@ -62,16 +62,17 @@ class TestRpcClientConnection:
     @pytest.mark.parametrize("encoding", ["borsh", "json", Encoding.Borsh, Encoding.SerdeJson])
     async def test_create_rpc_client_with_encoding(self, encoding):
         """Test creating an RPC client with various encoding options."""
-        client = RpcClient(resolver=Resolver(), network_id="testnet-10", encoding=encoding)
+        client = RpcClient(resolver=Resolver(),
+                           network_id="testnet-10", encoding=encoding)
         assert isinstance(client, RpcClient)
 
     async def test_rpc_client_connect_disconnect(self):
         """Test connecting and disconnecting from RPC."""
         client = RpcClient(resolver=Resolver(), network_id="testnet-10")
-        
+
         await client.connect()
         assert client.is_connected is True
-        
+
         await client.disconnect()
         assert client.is_connected is False
 
@@ -152,7 +153,7 @@ class TestRpcClientCalls:
     async def test_get_balance_by_address(self, testnet_rpc_client):
         """Test get_balance_by_address RPC call."""
         test_address = "kaspatest:qr0lr4ml9fn3chekrqmjdkergxl93l4wrk3dankcgvjq776s9wn9jhtkdksae"
-        
+
         result = await testnet_rpc_client.get_balance_by_address({
             "address": test_address
         })
@@ -161,7 +162,7 @@ class TestRpcClientCalls:
     async def test_get_balances_by_addresses(self, testnet_rpc_client):
         """Test get_balances_by_addresses RPC call."""
         test_address = "kaspatest:qr0lr4ml9fn3chekrqmjdkergxl93l4wrk3dankcgvjq776s9wn9jhtkdksae"
-        
+
         result = await testnet_rpc_client.get_balances_by_addresses({
             "addresses": [test_address]
         })
@@ -170,7 +171,7 @@ class TestRpcClientCalls:
     async def test_get_utxos_by_addresses(self, testnet_rpc_client):
         """Test get_utxos_by_addresses RPC call."""
         test_address = "kaspatest:qr0lr4ml9fn3chekrqmjdkergxl93l4wrk3dankcgvjq776s9wn9jhtkdksae"
-        
+
         result = await testnet_rpc_client.get_utxos_by_addresses({
             "addresses": [test_address]
         })
@@ -204,11 +205,10 @@ class TestRpcClientCalls:
     async def test_get_mempool_entries_by_addresses(self, testnet_rpc_client):
         """Test get_mempool_entries_by_addresses RPC call."""
         test_address = "kaspatest:qr0lr4ml9fn3chekrqmjdkergxl93l4wrk3dankcgvjq776s9wn9jhtkdksae"
-        
+
         result = await testnet_rpc_client.get_mempool_entries_by_addresses({
             "addresses": [test_address],
             "includeOrphanPool": True,
             "filterTransactionPool": False
         })
         assert isinstance(result, dict)
-

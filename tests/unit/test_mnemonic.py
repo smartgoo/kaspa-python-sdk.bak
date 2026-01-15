@@ -60,7 +60,8 @@ class TestMnemonicValidation:
     def test_validate_with_language_parameter(self):
         """Test validate() with explicit Language parameter."""
         # English is the default/only supported language
-        assert Mnemonic.validate(TEST_MNEMONIC_PHRASE, Language.English) is True
+        assert Mnemonic.validate(TEST_MNEMONIC_PHRASE,
+                                 Language.English) is True
 
 
 class TestMnemonicProperties:
@@ -104,24 +105,24 @@ class TestMnemonicSeed:
         """Test that the same mnemonic produces the same seed."""
         mnemonic1 = Mnemonic(phrase=TEST_MNEMONIC_PHRASE)
         mnemonic2 = Mnemonic(phrase=TEST_MNEMONIC_PHRASE)
-        
+
         seed1 = mnemonic1.to_seed()
         seed2 = mnemonic2.to_seed()
-        
+
         assert seed1 == seed2
 
     def test_different_password_different_seed(self, known_mnemonic):
         """Test that different passwords produce different seeds."""
         seed1 = known_mnemonic.to_seed("password1")
         seed2 = known_mnemonic.to_seed("password2")
-        
+
         assert seed1 != seed2
 
     def test_password_vs_no_password_different_seed(self, known_mnemonic):
         """Test that using a password produces a different seed than no password."""
         seed_no_password = known_mnemonic.to_seed()
         seed_with_password = known_mnemonic.to_seed("any_password")
-        
+
         assert seed_no_password != seed_with_password
 
 
@@ -134,8 +135,7 @@ class TestMnemonicDeterminism:
         # The seed should be consistent across runs
         # We just verify it's a valid 64-byte hex string
         assert len(seed) == 128
-        
+
         # Generate again and verify consistency
         seed2 = known_mnemonic.to_seed()
         assert seed == seed2
-

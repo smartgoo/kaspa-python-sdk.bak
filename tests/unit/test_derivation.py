@@ -122,7 +122,7 @@ class TestXPrvConversions:
         """Test XPrv into_string() with custom prefix."""
         ktrv_str = known_xprv_from_mnemonic.into_string("ktrv")
         assert ktrv_str.startswith("ktrv")
-        
+
         xprv_str = known_xprv_from_mnemonic.into_string("xprv")
         assert xprv_str.startswith("xprv")
 
@@ -139,7 +139,7 @@ class TestXPubCreation:
         """Test creating an XPub from an xpub string."""
         xpub = known_xprv_from_mnemonic.to_xpub()
         xpub_str = xpub.xpub
-        
+
         xpub2 = XPub(xpub_str)
         assert isinstance(xpub2, XPub)
 
@@ -215,7 +215,7 @@ class TestDerivationPath:
         """Test is_empty() method."""
         path = DerivationPath("m")
         assert path.is_empty() is True
-        
+
         path2 = DerivationPath("m/0")
         assert path2.is_empty() is False
 
@@ -229,14 +229,14 @@ class TestDerivationPath:
         path = DerivationPath("m")
         path.push(44, True)  # Hardened
         path.push(0, False)  # Normal
-        
+
         assert path.length() == 2
 
     def test_derivation_path_parent(self):
         """Test parent() method."""
         path = DerivationPath("m/44'/111111'/0'")
         parent = path.parent()
-        
+
         assert parent.length() == 2
 
 
@@ -246,13 +246,13 @@ class TestDerivationConsistency:
     def test_same_seed_same_keys(self, known_mnemonic):
         """Test that the same seed produces the same keys."""
         seed = known_mnemonic.to_seed()
-        
+
         xprv1 = XPrv(seed)
         xprv2 = XPrv(seed)
-        
+
         derived1 = xprv1.derive_path("m/44'/111111'/0'/0/0")
         derived2 = xprv2.derive_path("m/44'/111111'/0'/0/0")
-        
+
         assert derived1.private_key == derived2.private_key
 
     def test_xprv_xpub_derive_same_address(self, known_xprv_from_mnemonic):
@@ -260,18 +260,17 @@ class TestDerivationConsistency:
         # Derive to account level first (hardened derivation)
         account_xprv = known_xprv_from_mnemonic.derive_path("m/44'/111111'/0'")
         account_xpub = account_xprv.to_xpub()
-        
+
         # Now derive non-hardened paths from both
         receive_xprv = account_xprv.derive_path("m/0/0")
         receive_xpub = account_xpub.derive_path("m/0/0")
-        
+
         # Get public keys
         pubkey_from_xprv = receive_xprv.to_xpub().to_public_key()
         pubkey_from_xpub = receive_xpub.to_public_key()
-        
+
         # Addresses should match
         addr1 = pubkey_from_xprv.to_address("mainnet")
         addr2 = pubkey_from_xpub.to_address("mainnet")
-        
-        assert addr1.to_string() == addr2.to_string()
 
+        assert addr1.to_string() == addr2.to_string()

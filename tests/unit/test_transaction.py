@@ -42,7 +42,7 @@ class TestTransactionOutpoint:
         tx_id = "a" * 64
         tx_hash = Hash(tx_id)
         outpoint = TransactionOutpoint(tx_hash, 5)
-        
+
         assert outpoint.transaction_id == tx_id
         assert outpoint.index == 5
 
@@ -51,7 +51,7 @@ class TestTransactionOutpoint:
         tx_id = "b" * 64
         tx_hash = Hash(tx_id)
         outpoint = TransactionOutpoint(tx_hash, 0)
-        
+
         outpoint_id = outpoint.get_id()
         assert isinstance(outpoint_id, str)
 
@@ -81,7 +81,7 @@ class TestScriptPublicKey:
         """Test ScriptPublicKey script property."""
         script_hex = "51"
         spk = ScriptPublicKey(0, script_hex)
-        
+
         script = spk.script
         assert isinstance(script, str)
 
@@ -99,14 +99,14 @@ class TestTransactionOutput:
         """Test TransactionOutput value property."""
         spk = ScriptPublicKey(0, "51")
         output = TransactionOutput(1000000, spk)
-        
+
         assert output.value == 1000000
 
     def test_transaction_output_value_setter(self):
         """Test setting TransactionOutput value."""
         spk = ScriptPublicKey(0, "51")
         output = TransactionOutput(1000000, spk)
-        
+
         output.value = 2000000
         assert output.value == 2000000
 
@@ -126,7 +126,7 @@ class TestTransactionInput:
         tx_hash = Hash("a" * 64)
         outpoint = TransactionOutpoint(tx_hash, 5)
         input = TransactionInput(outpoint, "deadbeef", 0xFFFFFFFF, 1)
-        
+
         assert isinstance(input.previous_outpoint, TransactionOutpoint)
         assert input.sequence == 0xFFFFFFFF
         assert input.sig_op_count == 1
@@ -140,10 +140,10 @@ class TestTransaction:
         tx_hash = Hash("0" * 64)
         outpoint = TransactionOutpoint(tx_hash, 0)
         input = TransactionInput(outpoint, "", 0, 1)
-        
+
         spk = ScriptPublicKey(0, "51")
         output = TransactionOutput(1000000, spk)
-        
+
         tx = Transaction(0, [input], [output], 0, "0" * 40, 0, "", 0)
         assert isinstance(tx, Transaction)
 
@@ -152,26 +152,25 @@ class TestTransaction:
         tx_hash = Hash("0" * 64)
         outpoint = TransactionOutpoint(tx_hash, 0)
         input = TransactionInput(outpoint, "", 0, 1)
-        
+
         spk = ScriptPublicKey(0, "51")
         output = TransactionOutput(1000000, spk)
-        
+
         tx1 = Transaction(0, [input], [output], 0, "0" * 40, 0, "", 0)
         tx2 = Transaction(0, [input], [output], 0, "0" * 40, 0, "", 0)
         assert tx1 == tx2
-
 
     def test_transaction_properties(self):
         """Test Transaction properties."""
         tx_hash = Hash("0" * 64)
         outpoint = TransactionOutpoint(tx_hash, 0)
         input = TransactionInput(outpoint, "", 0, 1)
-        
+
         spk = ScriptPublicKey(0, "51")
         output = TransactionOutput(1000000, spk)
-        
+
         tx = Transaction(0, [input], [output], 100, "0" * 40, 0, "", 0)
-        
+
         assert tx.version == 0
         assert tx.lock_time == 100
         assert len(tx.inputs) == 1
@@ -182,12 +181,12 @@ class TestTransaction:
         tx_hash = Hash("0" * 64)
         outpoint = TransactionOutpoint(tx_hash, 0)
         input = TransactionInput(outpoint, "", 0, 1)
-        
+
         spk = ScriptPublicKey(0, "51")
         output = TransactionOutput(1000000, spk)
-        
+
         tx = Transaction(0, [input], [output], 0, "0" * 40, 0, "", 0)
-        
+
         tx_id = tx.id
         assert isinstance(tx_id, str)
         assert len(tx_id) == 64  # 32 bytes hex
@@ -197,12 +196,12 @@ class TestTransaction:
         tx_hash = Hash("0" * 64)
         outpoint = TransactionOutpoint(tx_hash, 0)
         input = TransactionInput(outpoint, "", 0, 1)
-        
+
         spk = ScriptPublicKey(0, "51")
         output = TransactionOutput(1000000, spk)
-        
+
         tx = Transaction(0, [input], [output], 0, "0" * 40, 0, "", 0)
-        
+
         # Regular transaction should not be coinbase
         # (coinbase transactions have specific subnetwork_id)
         assert isinstance(tx.is_coinbase(), bool)
@@ -245,4 +244,3 @@ class TestGenerator:
     """Tests for Generator class."""
     # TODO
     pass
-
