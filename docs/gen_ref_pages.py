@@ -10,20 +10,11 @@ stub_file = Path("kaspa.pyi")
 
 nav = mkdocs_gen_files.Nav()
 
-# Default category for objects without explicit Category in docstring
-DEFAULT_CATEGORY = "Other"
-
-# Category display order
 CATEGORY_ORDER = [
-    "Core/Types",
-    "Core/Utils",
-    "RPC/Core",
-    "RPC/Messages",
-    "RPC/Types",
-    "Wallet/Core",
-    "Wallet/Keys",
-    "Wallet/Transactions",
-    "Other",
+    "Classes",
+    "Enums",
+    "Functions",
+    "TypedDicts",
 ]
 
 
@@ -48,26 +39,18 @@ def parse_stub_file(content: str) -> dict:
     for match in class_pattern.finditer(content):
         name = match.group(1)
         bases = match.group(2) or ""
-        docstring = match.group(3) or ""
         
         # Determine type
-        if 'enum.Enum' in bases:
+        if 'enum.Enum' in bases or 'Enum' in bases:
             obj_type = "enum"
+            category = "Enums"
         elif 'TypedDict' in bases:
             obj_type = "typeddict"
+            category = "TypedDicts"
         else:
             obj_type = "class"
-        
-        # Extract category from docstring (falls back to "Other")
-        category = extract_category(docstring, DEFAULT_CATEGORY)
-        
-        # Auto-group RPC classes by naming convention
-        if category == DEFAULT_CATEGORY:
-            if name.endswith('Request') or name.endswith('Response'):
-                category = "RPC/Messages"
-            elif name.startswith('Rpc'):
-                category = "RPC/Types"
-        
+            category = "Classes"
+
         objects[name] = {"type": obj_type, "category": category}
     
     # Find standalone functions with their docstrings
@@ -78,9 +61,7 @@ def parse_stub_file(content: str) -> dict:
     )
     for match in func_pattern.finditer(content):
         name = match.group(1)
-        docstring = match.group(2) or ""
-        category = extract_category(docstring, DEFAULT_CATEGORY)
-        objects[name] = {"type": "function", "category": category}
+        objects[name] = {"type": "function", "category": "Functions"}
     
     return objects
 
@@ -130,8 +111,7 @@ if stub_file.exists():
     with mkdocs_gen_files.open(index_path, "w") as f:
         f.write((
             "# API Reference\n\n"
-            "Complete reference for the Kaspa Python SDK.\n\n"
-            "Reference documentation is divided into 3 primary groups: Core, RPC, and Wallet."
+            "Complete reference for the Kaspa Python SDK."
         ))
 
     nav[("index",)] = "index.md"
@@ -156,12 +136,13 @@ if stub_file.exists():
         """Convert category string to nav path tuple."""
         return tuple(category.split("/"))
     
-    # Generate pages and nav for each object
+    # Generate category index pages and item pages
     for category in sorted_categories:
         nav_path = category_to_nav_path(category)
-        
+
+        # Generate pages for each item in category subdirectory
         for name in by_category[category]:
-            doc_path = Path("reference", f"{name}.md")
+            doc_path = Path("reference", category, f"{name}.md")
             type_label = get_type_label(name)
             
             with mkdocs_gen_files.open(doc_path, "w") as f:
@@ -172,7 +153,7 @@ if stub_file.exists():
                 f.write("      show_root_full_path: false\n")
             
             # Add to nav with category hierarchy
-            nav[(*nav_path, nav_label(name))] = f"{name}.md"
+            nav[(*nav_path, nav_label(name))] = f"{category}/{name}.md"
 
     # Generate the navigation file
     with mkdocs_gen_files.open("reference/SUMMARY.md", "w") as nav_file:
