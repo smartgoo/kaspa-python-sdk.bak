@@ -1797,50 +1797,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#kaspa.UtxoEntries.items" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;items
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#kaspa.UtxoEntries.__eq__" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__eq__
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#kaspa.UtxoEntries.amount" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;amount
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#kaspa.UtxoEntries.sort" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;sort
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -7228,50 +7184,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#kaspa.UtxoEntries.items" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;items
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#kaspa.UtxoEntries.__eq__" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;__eq__
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#kaspa.UtxoEntries.amount" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;amount
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#kaspa.UtxoEntries.sort" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;sort
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -7367,10 +7279,17 @@
 
 
 
-        <p>A collection of UTXO entry references.</p>
-<p>Provides methods for managing and querying multiple UTXOs.</p>
+        <p>UTXO entries collection for flexible input handling.</p>
+<p>This type is not intended to be instantiated directly from Python.
+It serves as a helper type that allows Rust functions to accept a list
+of UTXO entries in multiple convenient forms.</p>
 
 
+<details class="accepts" open>
+  <summary>Accepts</summary>
+  <p>list[UtxoEntryReference]: A list of UtxoEntryReference objects.
+list[dict]: A list of dicts with UtxoEntryReference-compatible keys.</p>
+</details>
 
 
 
@@ -7378,157 +7297,6 @@
 
 
 
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h2 id="kaspa.UtxoEntries.items" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">items</span>
-
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
-      <small class="doc doc-label doc-label-writable"><code>writable</code></small>
-  </span>
-
-<a href="#kaspa.UtxoEntries.items" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">items</span><span class="p">:</span> <span class="n"><span title="builtins.list">list</span></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-internal" title=" UtxoEntryReference (kaspa.UtxoEntryReference)" href="../UtxoEntryReference/#kaspa.UtxoEntryReference">UtxoEntryReference</a></span><span class="p">]</span>
-</span></code></pre></div>
-
-    <div class="doc doc-contents ">
-
-        <p>The list of UTXO entry references.</p>
-
-
-<table>
-      <thead>
-        <tr>
-          <th><span class="doc-section-title">RETURNS</span></th>
-          <th><span>DESCRIPTION</span></th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <span class="doc-returns-annotation">
-                    <code><span title="builtins.list">list</span>[<a class="autorefs autorefs-internal" title=" UtxoEntryReference (kaspa.UtxoEntryReference)" href="../UtxoEntryReference/#kaspa.UtxoEntryReference">UtxoEntryReference</a>]</code>
-                </span>
-            </td>
-            <td class="doc-returns-details">
-              <div class="doc-md-description">
-                <p>list[UtxoEntryReference]: List of UTXO references.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-    </div>
-
-</div>
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="kaspa.UtxoEntries.__eq__" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">__eq__</span>
-
-
-<a href="#kaspa.UtxoEntries.__eq__" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" title=" UtxoEntries (kaspa.UtxoEntries)" href="#kaspa.UtxoEntries">UtxoEntries</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="builtins.bool">bool</span></span>
-</span></code></pre></div>
-
-    <div class="doc doc-contents ">
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="kaspa.UtxoEntries.amount" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">amount</span>
-
-
-<a href="#kaspa.UtxoEntries.amount" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">amount</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n"><span title="builtins.int">int</span></span>
-</span></code></pre></div>
-
-    <div class="doc doc-contents ">
-
-        <p>Calculate the total amount of all UTXOs.</p>
-
-
-<table>
-      <thead>
-        <tr>
-          <th><span class="doc-section-title">RETURNS</span></th>
-          <th><span>DESCRIPTION</span></th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>int</code>
-            </td>
-            <td class="doc-returns-details">
-              <div class="doc-md-description">
-                <p>The sum of all UTXO values in sompi.</p>
-              </div>
-                <p>
-                  <span class="doc-returns-annotation">
-                    <b>TYPE:</b>
-                      <code><span title="builtins.int">int</span></code>
-                  </span>
-                </p>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="kaspa.UtxoEntries.sort" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">sort</span>
-
-
-<a href="#kaspa.UtxoEntries.sort" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">sort</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span>
-</span></code></pre></div>
-
-    <div class="doc doc-contents ">
-
-        <p>Sort the UTXO entries by amount in ascending order.</p>
-
-
-    </div>
-
-</div>
-
-
-
-  </div>
 
     </div>
 
