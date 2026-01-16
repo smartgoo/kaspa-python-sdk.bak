@@ -2166,7 +2166,6 @@ dependencies = [
  "kaspa-hashes",
  "kaspa-notify",
  "kaspa-rpc-core",
- "kaspa-rpc-macros",
  "kaspa-txscript",
  "kaspa-utils",
  "kaspa-wallet-core",
